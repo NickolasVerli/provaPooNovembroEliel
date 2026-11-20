@@ -17,13 +17,11 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioServices funcionarioServices;
 
-    // GET /api/funcionarios -> 200 OK (público)
     @GetMapping
     public ResponseEntity<List<FuncionarioModel>> listar() {
         return ResponseEntity.ok(funcionarioServices.findAll());
     }
 
-    // GET /api/funcionarios/{id} -> 200 OK ou 404 Not Found (público)
     @GetMapping("/{id}")
     public ResponseEntity<FuncionarioModel> buscarPorId(@PathVariable Long id) {
         return funcionarioServices.buscarPorId(id)
@@ -31,7 +29,6 @@ public class FuncionarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // POST /api/funcionarios -> 201 Created (público)
     @PostMapping
     public ResponseEntity<FuncionarioModel> criar(@RequestBody FuncionarioModel funcionarioModel) {
         FuncionarioModel criado = funcionarioServices.criarFuncionario(funcionarioModel);
@@ -40,16 +37,14 @@ public class FuncionarioController {
                 .body(criado);
     }
 
-    // PUT /api/funcionarios/{id} -> 200 OK ou 404 Not Found (exige autenticação)
     @PutMapping("/{id}")
     public ResponseEntity<FuncionarioModel> atualizar(@PathVariable Long id,
-                                                      @RequestBody FuncionarioModel funcionarioModel) {
+            @RequestBody FuncionarioModel funcionarioModel) {
         return funcionarioServices.atualizar(id, funcionarioModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // DELETE /api/funcionarios/{id} -> 204 No Content ou 404 Not Found (exige autenticação)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         return funcionarioServices.deletar(id)

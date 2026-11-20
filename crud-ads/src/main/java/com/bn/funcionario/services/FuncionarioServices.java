@@ -23,11 +23,10 @@ public class FuncionarioServices {
     }
 
     public FuncionarioModel criarFuncionario(FuncionarioModel funcionarioModel) {
-        funcionarioModel.setId(null); // garante que o POST sempre cria um novo registro
+        funcionarioModel.setId(null);
         return funcionarioRepository.save(funcionarioModel);
     }
 
-    // deletar: retorna false se o funcionário não existir
     public boolean deletar(Long id) {
         if (!funcionarioRepository.existsById(id)) {
             return false;
@@ -36,7 +35,6 @@ public class FuncionarioServices {
         return true;
     }
 
-    // atualizar: retorna vazio se o funcionário não existir
     public Optional<FuncionarioModel> atualizar(Long id, FuncionarioModel funcionarioModel) {
         return funcionarioRepository.findById(id).map(func -> {
             func.setNome(funcionarioModel.getNome());
